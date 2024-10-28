@@ -1,0 +1,13 @@
+# .air.toml
+
+root = "."
+tmp_dir = "tmp"
+include_dir = ["."]
+exclude_dir = ["vendor", "test", "assets"]
+
+[build]
+  templ generate && go build -o ./tmp/main .
+  bin = "tmp/main"
+
+[watch]
+  delay = 1000
