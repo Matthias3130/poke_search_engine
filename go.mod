@@ -1,6 +1,6 @@
 module main.go
 
-go 1.23
+go 1.23.1
 
 require github.com/pablor21/echo-etag/v4 v4.0.3
 
