@@ -15,7 +15,7 @@ func main() {
 	e.Static("assets", "./assets")
 
 	e.GET("/", func(ctx echo.Context) error {
-		return Render(ctx, http.StatusOK, templates.Base())
+		return Render(ctx, http.StatusOK, templates.Base(templates.SearchBar()))
 	})
 
 	e.Logger.Fatal(e.Start(":8008"))

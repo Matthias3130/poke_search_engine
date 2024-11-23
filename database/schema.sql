@@ -18,3 +18,9 @@ CREATE TABLE basic_info(
     sp_def INTEGER NOT NULL,
     spd INTEGER NOT NULL
 );
+
+.mode csv
+
+.import ./database/poke_database.csv basic_info
+
+SELECT * FROM basic_info;

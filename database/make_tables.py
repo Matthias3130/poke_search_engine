@@ -1,5 +1,4 @@
 # A simple script that extract the wanted information about a pokemon through pokeapi.co
-#hello
 
 import requests
 from pprint import pprint
@@ -47,7 +46,7 @@ def extract_info(data):
     
 def main():
     LAST_POKE = 1025
-    f = open("poke_database.txt", "w")
+    f = open("./datase/poke_database.csv", "w")
     
     for i in range(1,LAST_POKE):
         progress = (i / LAST_POKE) * 100
@@ -59,7 +58,7 @@ def main():
         if response.status_code == 200:
             data = response.json()
             poke_stats = extract_info(data)
-            result = ", ".join(f"{value}" for value in poke_stats.values())
+            result = ",".join(f"{value}" for value in poke_stats.values())
             # pprint(f"{result}")
             f.write(result + "\n")
         else:
