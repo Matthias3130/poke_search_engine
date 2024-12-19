@@ -1,6 +1,9 @@
 package main
 
 import (
+	"database/sql"
+	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/a-h/templ"
@@ -11,11 +14,31 @@ import (
 
 func main() {
 	e := echo.New()
+
+	const DB = "pokedex.db"
+
+	conn, err := sql.Open("sqlite3", DB)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	pingErr := conn.Ping()
+	if pingErr != nil {
+		log.Fatal(pingErr)
+	}
+
+	fmt.Println("Connected to SQLite database!")
+	defer conn.Close()
+
 	e.Use(etag.Etag())
 	e.Static("assets", "./assets")
 
 	e.GET("/", func(ctx echo.Context) error {
-		return Render(ctx, http.StatusOK, templates.Base(templates.SearchBar()))
+		pokemons, err := db.getAll(conn)
+		if err != nil {
+			log.Fatal(err)
+		}
+		return Render(ctx, http.StatusOK, templates.Base(templates.SearchBar(pokemons)))
 	})
 
 	e.Logger.Fatal(e.Start(":8008"))

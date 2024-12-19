@@ -1,6 +1,10 @@
 package templates
 
-templ SearchBar() {
+import (
+    "main.go/db"
+)
+
+templ SearchBar(pokemons []db.Pokemon) {
 <input type="search" placeholder="Search...">
 
 }

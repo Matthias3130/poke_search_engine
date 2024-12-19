@@ -2,7 +2,7 @@
 
 DROP TABLE IF EXISTS basic_info;
 
-CREATE TABLE basic_info(
+CREATE TABLE basic_info (
     id INTEGER PRIMARY KEY NOT NULL,
     name TEXT NOT NULL,
     img TEXT NOT NULL,
