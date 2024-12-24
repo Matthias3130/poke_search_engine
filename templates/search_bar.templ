@@ -1,10 +1,189 @@
 package templates
 
-import (
-    "main.go/db"
-)
 
-templ SearchBar(pokemons []db.Pokemon) {
-<input type="search" placeholder="Search...">
+templ SearchBar() {
+<input type="search" id="search" pattern="[A-Za-z\s\-]*" placeholder="Search..." value="" onkeyup="findPokemon(this.value)">
 
+<button type="button" onclick="toggleOrder()">
+<i class="material-icons" id="icon-sort">swap_vert</i>
+</button>
+
+<div id="filter-option">
+<label><input type="checkbox" class="poke-type" name="normal" value="normal">Normal</label>
+<label><input type="checkbox" class="poke-type" name="fire" value="fire">Fire</label>
+<label><input type="checkbox" class="poke-type" name="water" value="water">Water</label>
+<label><input type="checkbox" class="poke-type" name="electric" value="electric">Electric</label>
+<label><input type="checkbox" class="poke-type" name="grass" value="grass">Grass</label>
+<label><input type="checkbox" class="poke-type" name="ice" value="ice">Ice</label>
+<label><input type="checkbox" class="poke-type" name="fighting" value="fighting">Fighting</label>
+<label><input type="checkbox" class="poke-type" name="poison" value="poison">Poison</label>
+<label><input type="checkbox" class="poke-type" name="ground" value="ground">Ground</label>
+<label><input type="checkbox" class="poke-type" name="flying" value="flying">Flying</label>
+<label><input type="checkbox" class="poke-type" name="psychic" value="psychic">Psychic</label>
+<label><input type="checkbox" class="poke-type" name="bug" value="bug">Bug</label>
+<label><input type="checkbox" class="poke-type" name="rock" value="rock">Rock</label>
+<label><input type="checkbox" class="poke-type" name="ghost" value="ghost">Ghost</label>
+<label><input type="checkbox" class="poke-type" name="dragon" value="dragon">Dragon</label>
+<label><input type="checkbox" class="poke-type" name="dark" value="dark">Dark</label>
+<label><input type="checkbox" class="poke-type" name="steel" value="steel">Steel</label>
+<label><input type="checkbox" class="poke-type" name="fairy" value="fairy">Fairy</label>
+</div>
+
+<table>
+<thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Image</th>
+        <th>Main Type</th>
+        <th>Secondary Type</th>
+        <th>First Ability</th>
+        <th>Second Ability</th>
+        <th>Hidden Ability</th>
+        <th>HP</th>
+        <th>Atk</th>
+        <th>Def</th>
+        <th>Sp_Atk</th>
+        <th>Sp_Def</th>
+        <th>Spd</th>
+    </tr>
+</thead>
+<tbody id="table-body">
+</tbody>
+</table>
+
+<script>
+let isReverse = false;
+
+const checkboxes = document.querySelectorAll('.poke-type');
+checkboxes.forEach(checkbox => {
+  checkbox.addEventListener('change', () => {
+    console.log(`${checkbox.value} is ${checkbox.checked ? 'checked' : 'unchecked'}`);
+    const userInput = document.getElementById("search").value;
+    findPokemon(userInput)
+  });
+});
+
+getAllPokemon();
+
+function getAllPokemon() {
+    const url = "http://localhost:8008/get_all_pokemon";
+    fetch(url)
+    .then(response => {
+        if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        appendPokemon(data)
+        })
+    .catch(error => console.error('Fetch error:', error));
+}
+
+function findPokemon(userInput) {
+    validInput(userInput);
+
+    const url = "http://localhost:8008/find_pokemon";
+
+    const types = filteredByType();
+    console.log(types);
+    if (types.length === 0) {
+        console.log("No types selected.");
+    }
+
+    fetch(url, {
+         method: 'POST',  // Use POST to send data
+        headers: {
+            'Content-Type': 'application/json'  // Indicate that we're sending JSON data
+        },
+        body: JSON.stringify(
+            { 
+                find: userInput,
+                order: isReverse,
+                types: types
+            })  // Send inputValue in the request body
+    })
+    .then(response => {
+        if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        appendPokemon(data)
+    })
+    .catch(error => console.error('Fetch error:', error));
+}
+
+function toggleOrder() {
+    const userInput = document.getElementById("search").value;
+    isReverse = !isReverse;
+    findPokemon(userInput);
+}
+
+function filteredByType() {
+    const types = [];
+
+    checkboxes.forEach(checkbox => {
+        if (checkbox.checked) {
+            types.push(checkbox.value);
+        }
+    });
+    console.log(types);
+
+    return types
+
+    // const url = `/filter_by_type?types=${encodeURIComponent(types.join(","))}`;
+    // console.log(url);
+
+    // fetch(url)
+    // .then(response => {
+    //     if (!response.ok) {
+    //     throw new Error(`HTTP error! Status: ${response.status}`);
+    //     }
+    //     return response.json();
+    // })
+    // .then(data => {
+    //     appendPokemon(data)
+    // })
+    // .catch(error => console.error('Fetch error:', error));
+}
+
+function appendPokemon(pokemons) {
+    const tbody = document.getElementById("table-body");
+     tbody.innerHTML = '';
+    for (const pokemon of pokemons) {
+        const row = document.createElement("tr");
+        for (const key in pokemon) {
+            if (pokemon.hasOwnProperty(key)) {
+                const attribute = document.createElement("td");
+                switch (key) {
+                    // case "img":
+                    //     const image = document.createElement("img");
+                    //     image.src = String(pokemon[key]);
+                    //     image.style.width = "50px";  // Corrected width
+                    //     image.style.height = "50px";  // Corrected height
+                    //     attribute.appendChild(image);
+                    //     break;
+                    default:
+                        attribute.textContent = String(pokemon[key]);
+                        break;
+                }
+                row.appendChild(attribute);
+            }
+        }
+        tbody.appendChild(row);
+    }
+}
+
+function validInput(userInput) {
+    const pattern = /^[A-Za-z\s\-]*$/;
+    if (!pattern.test(userInput)) {
+       console.log("Input does not match the pattern.");
+    //    alert("Invalid Input:\s" + userInput);
+    }
+}
+
+</script>
 }

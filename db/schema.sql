@@ -21,6 +21,6 @@ CREATE TABLE basic_info (
 
 .mode csv
 
-.import ./database/poke_database.csv basic_info
+.import ./db/poke_database.csv basic_info
 
 SELECT * FROM basic_info;

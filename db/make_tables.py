@@ -46,7 +46,7 @@ def extract_info(data):
     
 def main():
     LAST_POKE = 1025
-    f = open("./datase/poke_database.csv", "w")
+    f = open("./db/poke_database.csv", "w")
     
     for i in range(1,LAST_POKE):
         progress = (i / LAST_POKE) * 100
