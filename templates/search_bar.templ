@@ -8,7 +8,7 @@ templ SearchBar() {
 <i class="material-icons" id="icon-sort">swap_vert</i>
 </button>
 
-<div id="filter-option">
+<div id="filter-type">
 <label><input type="checkbox" class="poke-type" name="normal" value="normal">Normal</label>
 <label><input type="checkbox" class="poke-type" name="fire" value="fire">Fire</label>
 <label><input type="checkbox" class="poke-type" name="water" value="water">Water</label>
@@ -131,23 +131,7 @@ function filteredByType() {
         }
     });
     console.log(types);
-
     return types
-
-    // const url = `/filter_by_type?types=${encodeURIComponent(types.join(","))}`;
-    // console.log(url);
-
-    // fetch(url)
-    // .then(response => {
-    //     if (!response.ok) {
-    //     throw new Error(`HTTP error! Status: ${response.status}`);
-    //     }
-    //     return response.json();
-    // })
-    // .then(data => {
-    //     appendPokemon(data)
-    // })
-    // .catch(error => console.error('Fetch error:', error));
 }
 
 function appendPokemon(pokemons) {
@@ -159,13 +143,13 @@ function appendPokemon(pokemons) {
             if (pokemon.hasOwnProperty(key)) {
                 const attribute = document.createElement("td");
                 switch (key) {
-                    // case "img":
-                    //     const image = document.createElement("img");
-                    //     image.src = String(pokemon[key]);
-                    //     image.style.width = "50px";  // Corrected width
-                    //     image.style.height = "50px";  // Corrected height
-                    //     attribute.appendChild(image);
-                    //     break;
+                    case "img":
+                        const image = document.createElement("img");
+                        image.src = "assets/images/" + String(pokemon["id"]) + ".png";
+                        image.style.width = "50px";  // Corrected width
+                        image.style.height = "50px";  // Corrected height
+                        attribute.appendChild(image);
+                        break;
                     default:
                         attribute.textContent = String(pokemon[key]);
                         break;

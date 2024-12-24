@@ -1,7 +1,6 @@
 # A simple script that extract the wanted information about a pokemon through pokeapi.co
 
 import requests
-from pprint import pprint
 
 def extract_info(data):
     main_t = "Null"
@@ -43,6 +42,11 @@ def extract_info(data):
     }
     return poke_stats
     
+def downloadImg(url, num):
+    response = requests.get(url)
+    if response.status_code == 200:
+        with open("assets/images/" + str(num)+'.png', 'wb') as file:
+                file.write(response.content)
     
 def main():
     LAST_POKE = 1025
@@ -58,8 +62,8 @@ def main():
         if response.status_code == 200:
             data = response.json()
             poke_stats = extract_info(data)
+            downloadImg(poke_stats["img"], i)
             result = ",".join(f"{value}" for value in poke_stats.values())
-            # pprint(f"{result}")
             f.write(result + "\n")
         else:
             print("Failed to fetch data:", response.status_code)
