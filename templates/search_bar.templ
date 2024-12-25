@@ -67,6 +67,7 @@ templ SearchBar() {
         <th>Sp_Atk</th>
         <th>Sp_Def</th>
         <th>Spd</th>
+        <th>Tags</th>
         // <th>Gen</th>
     </tr>
 </thead>
@@ -75,28 +76,29 @@ templ SearchBar() {
 </table>
 
 <script>
-let isReverse = false;
+document.addEventListener("DOMContentLoaded", () => {
+    getAllPokemon();
+});
+
+ let isReverse = false;
 
 const checkboxes = document.querySelectorAll('.checkbox');
 checkboxes.forEach(checkbox => {
-  checkbox.addEventListener('change', () => {
-    console.log(`${checkbox.value} is ${checkbox.checked ? 'checked' : 'unchecked'}`);
-    const userInput = document.getElementById("search").value;
-    findPokemon(userInput);
-  });
+    checkbox.addEventListener('change', () => {
+        console.log(`${checkbox.value} is ${checkbox.checked ? 'checked' : 'unchecked'}`);
+        const userInput = document.getElementById("search").value;
+        findPokemon(userInput);
+    });
 });
 
 const pokeGroup = document.querySelectorAll('.poke-group');
 pokeGroup.forEach(checkbox => {
-  checkbox.addEventListener('change', () => {
-    console.log(`${checkbox.value} is ${checkbox.checked ? 'checked' : 'unchecked'}`);
-    const userInput = document.getElementById("search").value;
-    findPokemon(userInput);
-  });
+    checkbox.addEventListener('change', () => {
+        console.log(`${checkbox.value} is ${checkbox.checked ? 'checked' : 'unchecked'}`);
+        const userInput = document.getElementById("search").value;
+        findPokemon(userInput);
+    });
 });
-
-
-getAllPokemon();
 
 function getAllPokemon() {
     const url = "http://localhost:8008/get_all_pokemon";
@@ -212,10 +214,19 @@ function appendPokemon(pokemons) {
                 switch (key) {
                     case "img":
                         const image = document.createElement("img");
-                        image.src = "assets/images/" + String(pokemon["id"]) + ".png";
+                        const source = "assets/images/" + String(pokemon["id"]) + ".png";
+                        image.src = source;
                         image.style.width = "50px";  // Corrected width
                         image.style.height = "50px";  // Corrected height
                         attribute.appendChild(image);
+                        break;
+                    case "tags":
+                        const lyst = document.createElement("ul");
+                        const tags = pokemon["tags"];
+                        for (const tag in tags) {
+                            switchTagValues(lyst, tags, tag);
+                        }
+                        attribute.appendChild(lyst);
                         break;
                     default:
                         attribute.textContent = String(pokemon[key]);
@@ -225,6 +236,61 @@ function appendPokemon(pokemons) {
             }
         }
         tbody.appendChild(row);
+    }
+}
+
+function switchTagValues(lyst, tags, key) {
+    const datapoint = document.createElement("li");
+    const gen = {
+        1: "1-Kanto",
+        2: "2-Johto",
+        3: "3-Hoenn",
+        4: "4-Sinnoh",
+        5: "5-Unova",
+        6: "6-Kalos",
+        7: "7-Alola",
+        8: "8-Galar",
+        9: "9-Paldea"
+    };
+
+    switch (key) {
+        case "gens":
+            datapoint.textContent = gen[tags[key]];
+            lyst.appendChild(datapoint);
+            break;
+        case "isStarter":
+            if (tags[key] == true) {
+                datapoint.textContent = "Starter";
+                lyst.appendChild(datapoint);
+            }
+            break;
+        case "isPseudo":
+            if (tags[key] == true) {
+                datapoint.textContent = "Pseudo-Legendary";
+                lyst.appendChild(datapoint);
+            }
+            
+            break;
+        case "isSubLegend":
+            if (tags[key] == true) {
+                datapoint.textContent = "Sub-Legendary";
+                lyst.appendChild(datapoint);
+            }
+            break;
+        case "isLegend":
+            if (tags[key] == true) {
+                datapoint.textContent = "Legendary";
+                lyst.appendChild(datapoint);
+            }
+            break;
+        case "isMyth":
+            if (tags[key] == true)  {
+                datapoint.textContent ="Mythical";
+                lyst.appendChild(datapoint);
+            }
+            break;
+        default:
+            break;
     }
 }
 

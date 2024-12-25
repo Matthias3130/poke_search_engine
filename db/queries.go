@@ -7,6 +7,15 @@ import (
 	"strings"
 )
 
+type Tags struct {
+	Gen         int  `json:"gens"`
+	IsStarter   bool `json:"isStarter"`
+	IsPseudo    bool `json:"isPseudo"`
+	IsSubLegend bool `json:"isSubLegend"`
+	IsLegend    bool `json:"isLegend"`
+	IsMyth      bool `json:"isMyth"`
+}
+
 type Pokemon struct {
 	ID            int    `json:"id"`                       // Primary Key
 	Name          string `json:"name"`                     // Not Null
@@ -22,12 +31,15 @@ type Pokemon struct {
 	SpAtk         int    `json:"sp_atk"`                   // Not Null
 	SpDef         int    `json:"sp_def"`                   // Not Null
 	Spd           int    `json:"spd"`                      // Not Null
+	Tags          Tags   `json:"tags"`
 }
 
 func GetAllPokemon(conn *sql.DB) ([]Pokemon, error) {
 	var query = `
-	SELECT id, name, img, main_t, sub_t, first_ability, second_ability, hidden_ability, hp, atk, def, sp_atk, sp_def, spd
+	SELECT *
 	FROM basic_info;`
+
+	//  id, name, img, main_t, sub_t, first_ability, second_ability, hidden_ability, hp, atk, def, sp_atk, sp_def, spd
 
 	rows, err := conn.Query(query)
 	if err != nil {
@@ -36,6 +48,9 @@ func GetAllPokemon(conn *sql.DB) ([]Pokemon, error) {
 	defer rows.Close()
 
 	var pokemons []Pokemon
+	var gen int
+	var isStarter, isPseudo, isSubLegend, isLegend, isMyth bool
+
 	for rows.Next() {
 		var pokemon Pokemon
 		err = rows.Scan(
@@ -53,10 +68,26 @@ func GetAllPokemon(conn *sql.DB) ([]Pokemon, error) {
 			&pokemon.SpAtk,
 			&pokemon.SpDef,
 			&pokemon.Spd,
+			&gen,
+			&isStarter,
+			&isPseudo,
+			&isSubLegend,
+			&isLegend,
+			&isMyth,
 		)
 		if err != nil {
 			return nil, err
 		}
+
+		pokemon.Tags = Tags{
+			Gen:         gen,
+			IsStarter:   isStarter,
+			IsPseudo:    isPseudo,
+			IsSubLegend: isSubLegend,
+			IsLegend:    isLegend,
+			IsMyth:      isMyth,
+		}
+
 		pokemons = append(pokemons, pokemon)
 	}
 
@@ -72,10 +103,12 @@ func FindPokemon(conn *sql.DB, txtInput string, isReverse bool, types []string, 
 	var args []interface{}
 
 	query = `
-	SELECT id, name, img, main_t, sub_t, first_ability, second_ability, hidden_ability, hp, atk, def, sp_atk, sp_def, spd 
+	SELECT * 
 	FROM basic_info 
 	WHERE name LIKE ?
 	`
+
+	// id, name, img, main_t, sub_t, first_ability, second_ability, hidden_ability, hp, atk, def, sp_atk, sp_def, spd
 
 	args = append(args, txtInput+"%")
 
@@ -132,6 +165,9 @@ func FindPokemon(conn *sql.DB, txtInput string, isReverse bool, types []string, 
 	defer rows.Close()
 
 	var pokemons []Pokemon
+	var gen int
+	var isStarter, isPseudo, isSubLegend, isLegend, isMyth bool
+
 	for rows.Next() {
 		var pokemon Pokemon
 		err = rows.Scan(
@@ -149,10 +185,26 @@ func FindPokemon(conn *sql.DB, txtInput string, isReverse bool, types []string, 
 			&pokemon.SpAtk,
 			&pokemon.SpDef,
 			&pokemon.Spd,
+			&gen,
+			&isStarter,
+			&isPseudo,
+			&isSubLegend,
+			&isLegend,
+			&isMyth,
 		)
 		if err != nil {
 			return nil, err
 		}
+
+		pokemon.Tags = Tags{
+			Gen:         gen,
+			IsStarter:   isStarter,
+			IsPseudo:    isPseudo,
+			IsSubLegend: isSubLegend,
+			IsLegend:    isLegend,
+			IsMyth:      isMyth,
+		}
+
 		pokemons = append(pokemons, pokemon)
 	}
 
