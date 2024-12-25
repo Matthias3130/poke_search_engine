@@ -66,6 +66,8 @@ func main() {
 			Find  string   `json:"find"` // This matches the key sent in the request body
 			Order bool     `json:"order"`
 			Types []string `json:"types"`
+			Gens  []int    `json:"gens"`
+			Group []bool   `json:"group"`
 		}
 
 		if err := ctx.Bind(&request); err != nil {
@@ -75,7 +77,7 @@ func main() {
 		log.Println("Received Types:", request.Types)
 		log.Println("Received request:", request) // Logs the received request
 
-		pokemons, err := db.FindPokemon(conn, request.Find, request.Order, request.Types)
+		pokemons, err := db.FindPokemon(conn, request.Find, request.Order, request.Types, request.Gens, request.Group)
 		if err != nil {
 			log.Fatal(err)
 		}

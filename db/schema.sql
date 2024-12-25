@@ -16,7 +16,13 @@ CREATE TABLE basic_info (
     def INTEGER NOT NULL,
     sp_atk INTEGER NOT NULL,
     sp_def INTEGER NOT NULL,
-    spd INTEGER NOT NULL
+    spd INTEGER NOT NULL,
+    gen INTEGER NOT NULL,
+    isStarter INTEGER NOT NULL,
+    isPseudo INTEGER NOT NULL,
+    isSubLegend INTEGER NOT NULL,
+    isLegend INTEGER NOT NULL,
+    isMyth INTEGER NOT NULL
 );
 
 .mode csv
@@ -24,3 +30,5 @@ CREATE TABLE basic_info (
 .import ./db/poke_database.csv basic_info
 
 SELECT * FROM basic_info;
+
+UPDATE basic_info SET isStarter = 0 WHERE id = 494;

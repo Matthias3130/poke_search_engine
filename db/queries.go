@@ -25,7 +25,9 @@ type Pokemon struct {
 }
 
 func GetAllPokemon(conn *sql.DB) ([]Pokemon, error) {
-	var query = "SELECT * FROM basic_info;"
+	var query = `
+	SELECT id, name, img, main_t, sub_t, first_ability, second_ability, hidden_ability, hp, atk, def, sp_atk, sp_def, spd
+	FROM basic_info;`
 
 	rows, err := conn.Query(query)
 	if err != nil {
@@ -65,37 +67,53 @@ func GetAllPokemon(conn *sql.DB) ([]Pokemon, error) {
 	return pokemons, nil
 }
 
-func FindPokemon(conn *sql.DB, txtInput string, isReverse bool, types []string) ([]Pokemon, error) {
+func FindPokemon(conn *sql.DB, txtInput string, isReverse bool, types []string, gens []int, group []bool) ([]Pokemon, error) {
 	var query string
 	var args []interface{}
 
-	// Always add the name condition
 	query = `
-	SELECT * 
+	SELECT id, name, img, main_t, sub_t, first_ability, second_ability, hidden_ability, hp, atk, def, sp_atk, sp_def, spd 
 	FROM basic_info 
 	WHERE name LIKE ?
 	`
 
 	args = append(args, txtInput+"%")
 
-	// If types is not empty, add the filtering condition for main_t and sub_t
 	if len(types) > 0 {
-		// Build the dynamic placeholders for the IN clause
 		placeholders := make([]string, len(types))
 		for i := range types {
-			placeholders[i] = "?" // SQLite uses "?" for placeholders
+			placeholders[i] = "?"
 		}
-		typesPlaceholder := strings.Join(placeholders, ",") // Build the IN clause string
+		typesPlaceholder := strings.Join(placeholders, ",")
 
-		// Add the condition for the types
 		query += fmt.Sprintf(` AND (main_t IN (%s) OR sub_t IN (%s))`, typesPlaceholder, typesPlaceholder)
 
-		// Append types to the args slice
 		args = append(args, interfaceSlice(types)...)
 		args = append(args, interfaceSlice(types)...)
 	}
 
-	// If reverse order is requested, add the ORDER BY clause
+	if len(gens) > 0 {
+		placeholders := make([]string, len(gens))
+		for i := range gens {
+			placeholders[i] = "?"
+		}
+		gensPlaceholder := strings.Join(placeholders, ",")
+		query += fmt.Sprintf(` AND gen IN (%s)`, gensPlaceholder)
+		args = append(args, intSliceToInterface(gens)...)
+	}
+
+	var tmpQuery = ``
+	for i, value := range group {
+		groupLabel := []string{"isStarter", "isPseudo", "isSubLegend", "isLegend", "isMyth"}
+		if i < len(groupLabel) && value {
+			tmpQuery += fmt.Sprintf(`(%s) = 1 OR`, groupLabel[i])
+		}
+	}
+	if len(tmpQuery) > 0 {
+		tmpQuery = tmpQuery[:len(tmpQuery)-3]
+		query += `AND (` + tmpQuery + `)`
+	}
+
 	if isReverse {
 		query += ` ORDER BY id DESC`
 	}
@@ -146,6 +164,14 @@ func FindPokemon(conn *sql.DB, txtInput string, isReverse bool, types []string) 
 }
 
 func interfaceSlice(slice []string) []interface{} {
+	result := make([]interface{}, len(slice))
+	for i, v := range slice {
+		result[i] = v
+	}
+	return result
+}
+
+func intSliceToInterface(slice []int) []interface{} {
 	result := make([]interface{}, len(slice))
 	for i, v := range slice {
 		result[i] = v

@@ -9,25 +9,46 @@ templ SearchBar() {
 </button>
 
 <div id="filter-type">
-<label><input type="checkbox" class="poke-type" name="normal" value="normal">Normal</label>
-<label><input type="checkbox" class="poke-type" name="fire" value="fire">Fire</label>
-<label><input type="checkbox" class="poke-type" name="water" value="water">Water</label>
-<label><input type="checkbox" class="poke-type" name="electric" value="electric">Electric</label>
-<label><input type="checkbox" class="poke-type" name="grass" value="grass">Grass</label>
-<label><input type="checkbox" class="poke-type" name="ice" value="ice">Ice</label>
-<label><input type="checkbox" class="poke-type" name="fighting" value="fighting">Fighting</label>
-<label><input type="checkbox" class="poke-type" name="poison" value="poison">Poison</label>
-<label><input type="checkbox" class="poke-type" name="ground" value="ground">Ground</label>
-<label><input type="checkbox" class="poke-type" name="flying" value="flying">Flying</label>
-<label><input type="checkbox" class="poke-type" name="psychic" value="psychic">Psychic</label>
-<label><input type="checkbox" class="poke-type" name="bug" value="bug">Bug</label>
-<label><input type="checkbox" class="poke-type" name="rock" value="rock">Rock</label>
-<label><input type="checkbox" class="poke-type" name="ghost" value="ghost">Ghost</label>
-<label><input type="checkbox" class="poke-type" name="dragon" value="dragon">Dragon</label>
-<label><input type="checkbox" class="poke-type" name="dark" value="dark">Dark</label>
-<label><input type="checkbox" class="poke-type" name="steel" value="steel">Steel</label>
-<label><input type="checkbox" class="poke-type" name="fairy" value="fairy">Fairy</label>
+  <label><input type="checkbox" class="poke-type checkbox" name="normal" value="normal">Normal</label>
+  <label><input type="checkbox" class="poke-type checkbox" name="fire" value="fire">Fire</label>
+  <label><input type="checkbox" class="poke-type checkbox" name="water" value="water">Water</label>
+  <label><input type="checkbox" class="poke-type checkbox" name="electric" value="electric">Electric</label>
+  <label><input type="checkbox" class="poke-type checkbox" name="grass" value="grass">Grass</label>
+  <label><input type="checkbox" class="poke-type checkbox" name="ice" value="ice">Ice</label>
+  <label><input type="checkbox" class="poke-type checkbox" name="fighting" value="fighting">Fighting</label>
+  <label><input type="checkbox" class="poke-type checkbox" name="poison" value="poison">Poison</label>
+  <label><input type="checkbox" class="poke-type checkbox" name="ground" value="ground">Ground</label>
+  <label><input type="checkbox" class="poke-type checkbox" name="flying" value="flying">Flying</label>
+  <label><input type="checkbox" class="poke-type checkbox" name="psychic" value="psychic">Psychic</label>
+  <label><input type="checkbox" class="poke-type checkbox" name="bug" value="bug">Bug</label>
+  <label><input type="checkbox" class="poke-type checkbox" name="rock" value="rock">Rock</label>
+  <label><input type="checkbox" class="poke-type checkbox" name="ghost" value="ghost">Ghost</label>
+  <label><input type="checkbox" class="poke-type checkbox" name="dragon" value="dragon">Dragon</label>
+  <label><input type="checkbox" class="poke-type checkbox" name="dark" value="dark">Dark</label>
+  <label><input type="checkbox" class="poke-type checkbox" name="steel" value="steel">Steel</label>
+  <label><input type="checkbox" class="poke-type checkbox" name="fairy" value="fairy">Fairy</label>
 </div>
+
+<div id="filter-generation">
+  <label><input type="checkbox" class="poke-gen checkbox" name="kanto" value="1">Kanto</label>
+  <label><input type="checkbox" class="poke-gen checkbox" name="johto" value="2">Johto</label>
+  <label><input type="checkbox" class="poke-gen checkbox" name="hoenn" value="3">Hoenn</label>
+  <label><input type="checkbox" class="poke-gen checkbox" name="sinnoh" value="4">Sinnoh</label>
+  <label><input type="checkbox" class="poke-gen checkbox" name="unova" value="5">Unova</label>
+  <label><input type="checkbox" class="poke-gen checkbox" name="kalos" value="6">Kalos</label>
+  <label><input type="checkbox" class="poke-gen checkbox" name="alola" value="7">Alola</label>
+  <label><input type="checkbox" class="poke-gen checkbox" name="galar" value="8">Galar</label>
+  <label><input type="checkbox" class="poke-gen checkbox" name="paldea" value="9">Paldea</label>
+</div>
+
+<div id="filter-group">
+    <label><input type="checkbox" class="poke-group" name="starters" id="starters" value="starters">Starters</label>
+    <label><input type="checkbox" class="poke-group" name="pseudo-legendary" id="pseudo-legendary" value="pseudo-legendary">Pseudo-Legendary</label>
+    <label><input type="checkbox" class="poke-group" name="sub-legendary" id="sub-legendary" value="sub-legendary">Sub-Legendary</label> 
+    <label><input type="checkbox" class="poke-group" name="legendary" id="legendary" value="legendary">Legendary</label> 
+    <label><input type="checkbox" class="poke-group" name="mythical" id="mythical" value="mythical">Mythical</label>
+</div>
+
 
 <table>
 <thead>
@@ -46,6 +67,7 @@ templ SearchBar() {
         <th>Sp_Atk</th>
         <th>Sp_Def</th>
         <th>Spd</th>
+        // <th>Gen</th>
     </tr>
 </thead>
 <tbody id="table-body">
@@ -55,14 +77,24 @@ templ SearchBar() {
 <script>
 let isReverse = false;
 
-const checkboxes = document.querySelectorAll('.poke-type');
+const checkboxes = document.querySelectorAll('.checkbox');
 checkboxes.forEach(checkbox => {
   checkbox.addEventListener('change', () => {
     console.log(`${checkbox.value} is ${checkbox.checked ? 'checked' : 'unchecked'}`);
     const userInput = document.getElementById("search").value;
-    findPokemon(userInput)
+    findPokemon(userInput);
   });
 });
+
+const pokeGroup = document.querySelectorAll('.poke-group');
+pokeGroup.forEach(checkbox => {
+  checkbox.addEventListener('change', () => {
+    console.log(`${checkbox.value} is ${checkbox.checked ? 'checked' : 'unchecked'}`);
+    const userInput = document.getElementById("search").value;
+    findPokemon(userInput);
+  });
+});
+
 
 getAllPokemon();
 
@@ -92,6 +124,28 @@ function findPokemon(userInput) {
         console.log("No types selected.");
     }
 
+    const gens = filteredByGen();
+    console.log(gens);
+    if (gens.length === 0) {
+        console.log("No gens selected.");
+    }
+
+    const starter = document.getElementById("starters");
+    const pseudo = document.getElementById("pseudo-legendary");
+    const sub = document.getElementById("sub-legendary");
+    const legend = document.getElementById("legendary");
+    const myth = document.getElementById("mythical");
+
+    const group = [
+        starter ? starter.checked : false,
+        pseudo ? pseudo.checked : false,
+        sub ? sub.checked : false,
+        legend ? legend.checked : false,
+        myth ? myth.checked : false
+    ];
+
+    console.log(group)
+
     fetch(url, {
          method: 'POST',  // Use POST to send data
         headers: {
@@ -101,7 +155,9 @@ function findPokemon(userInput) {
             { 
                 find: userInput,
                 order: isReverse,
-                types: types
+                types: types,
+                gens: gens,
+                group: group
             })  // Send inputValue in the request body
     })
     .then(response => {
@@ -124,14 +180,25 @@ function toggleOrder() {
 
 function filteredByType() {
     const types = [];
-
     checkboxes.forEach(checkbox => {
-        if (checkbox.checked) {
+        if (checkbox.checked && !Number.isInteger(parseFloat(checkbox.value))) {
             types.push(checkbox.value);
         }
     });
     console.log(types);
     return types
+}
+
+function filteredByGen() {
+    const gens = [];
+    checkboxes.forEach(checkbox => {
+        const genNum = parseInt(checkbox.value, 10); 
+        if (checkbox.checked && genNum >= 0 && parseInt(checkbox.value)  <= 9) {
+            gens.push(genNum);
+        }
+    });
+    console.log(gens);
+    return gens;
 }
 
 function appendPokemon(pokemons) {
