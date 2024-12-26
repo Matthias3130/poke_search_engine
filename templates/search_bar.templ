@@ -9,39 +9,42 @@ templ SearchBar() {
 </button>
 
 <div id="filter-type">
-  <label><input type="checkbox" class="poke-type checkbox" name="normal" value="normal">Normal</label>
-  <label><input type="checkbox" class="poke-type checkbox" name="fire" value="fire">Fire</label>
-  <label><input type="checkbox" class="poke-type checkbox" name="water" value="water">Water</label>
-  <label><input type="checkbox" class="poke-type checkbox" name="electric" value="electric">Electric</label>
-  <label><input type="checkbox" class="poke-type checkbox" name="grass" value="grass">Grass</label>
-  <label><input type="checkbox" class="poke-type checkbox" name="ice" value="ice">Ice</label>
-  <label><input type="checkbox" class="poke-type checkbox" name="fighting" value="fighting">Fighting</label>
-  <label><input type="checkbox" class="poke-type checkbox" name="poison" value="poison">Poison</label>
-  <label><input type="checkbox" class="poke-type checkbox" name="ground" value="ground">Ground</label>
-  <label><input type="checkbox" class="poke-type checkbox" name="flying" value="flying">Flying</label>
-  <label><input type="checkbox" class="poke-type checkbox" name="psychic" value="psychic">Psychic</label>
-  <label><input type="checkbox" class="poke-type checkbox" name="bug" value="bug">Bug</label>
-  <label><input type="checkbox" class="poke-type checkbox" name="rock" value="rock">Rock</label>
-  <label><input type="checkbox" class="poke-type checkbox" name="ghost" value="ghost">Ghost</label>
-  <label><input type="checkbox" class="poke-type checkbox" name="dragon" value="dragon">Dragon</label>
-  <label><input type="checkbox" class="poke-type checkbox" name="dark" value="dark">Dark</label>
-  <label><input type="checkbox" class="poke-type checkbox" name="steel" value="steel">Steel</label>
-  <label><input type="checkbox" class="poke-type checkbox" name="fairy" value="fairy">Fairy</label>
+    <h3>Type</h3>
+    <label><input type="checkbox" class="poke-type checkbox" name="normal" value="normal">Normal</label>
+    <label><input type="checkbox" class="poke-type checkbox" name="fire" value="fire">Fire</label>
+    <label><input type="checkbox" class="poke-type checkbox" name="water" value="water">Water</label>
+    <label><input type="checkbox" class="poke-type checkbox" name="electric" value="electric">Electric</label>
+    <label><input type="checkbox" class="poke-type checkbox" name="grass" value="grass">Grass</label>
+    <label><input type="checkbox" class="poke-type checkbox" name="ice" value="ice">Ice</label>
+    <label><input type="checkbox" class="poke-type checkbox" name="fighting" value="fighting">Fighting</label>
+    <label><input type="checkbox" class="poke-type checkbox" name="poison" value="poison">Poison</label>
+    <label><input type="checkbox" class="poke-type checkbox" name="ground" value="ground">Ground</label>
+    <label><input type="checkbox" class="poke-type checkbox" name="flying" value="flying">Flying</label>
+    <label><input type="checkbox" class="poke-type checkbox" name="psychic" value="psychic">Psychic</label>
+    <label><input type="checkbox" class="poke-type checkbox" name="bug" value="bug">Bug</label>
+    <label><input type="checkbox" class="poke-type checkbox" name="rock" value="rock">Rock</label>
+    <label><input type="checkbox" class="poke-type checkbox" name="ghost" value="ghost">Ghost</label>
+    <label><input type="checkbox" class="poke-type checkbox" name="dragon" value="dragon">Dragon</label>
+    <label><input type="checkbox" class="poke-type checkbox" name="dark" value="dark">Dark</label>
+    <label><input type="checkbox" class="poke-type checkbox" name="steel" value="steel">Steel</label>
+    <label><input type="checkbox" class="poke-type checkbox" name="fairy" value="fairy">Fairy</label>
 </div>
 
 <div id="filter-generation">
-  <label><input type="checkbox" class="poke-gen checkbox" name="kanto" value="1">Kanto</label>
-  <label><input type="checkbox" class="poke-gen checkbox" name="johto" value="2">Johto</label>
-  <label><input type="checkbox" class="poke-gen checkbox" name="hoenn" value="3">Hoenn</label>
-  <label><input type="checkbox" class="poke-gen checkbox" name="sinnoh" value="4">Sinnoh</label>
-  <label><input type="checkbox" class="poke-gen checkbox" name="unova" value="5">Unova</label>
-  <label><input type="checkbox" class="poke-gen checkbox" name="kalos" value="6">Kalos</label>
-  <label><input type="checkbox" class="poke-gen checkbox" name="alola" value="7">Alola</label>
-  <label><input type="checkbox" class="poke-gen checkbox" name="galar" value="8">Galar</label>
-  <label><input type="checkbox" class="poke-gen checkbox" name="paldea" value="9">Paldea</label>
+    <h3>Region</h3>
+    <label><input type="checkbox" class="poke-gen checkbox" name="kanto" value="1">Kanto</label>
+    <label><input type="checkbox" class="poke-gen checkbox" name="johto" value="2">Johto</label>
+    <label><input type="checkbox" class="poke-gen checkbox" name="hoenn" value="3">Hoenn</label>
+    <label><input type="checkbox" class="poke-gen checkbox" name="sinnoh" value="4">Sinnoh</label>
+    <label><input type="checkbox" class="poke-gen checkbox" name="unova" value="5">Unova</label>
+    <label><input type="checkbox" class="poke-gen checkbox" name="kalos" value="6">Kalos</label>
+    <label><input type="checkbox" class="poke-gen checkbox" name="alola" value="7">Alola</label>
+    <label><input type="checkbox" class="poke-gen checkbox" name="galar" value="8">Galar</label>
+    <label><input type="checkbox" class="poke-gen checkbox" name="paldea" value="9">Paldea</label>
 </div>
 
 <div id="filter-group">
+    <h3>Tags</h3>
     <label><input type="checkbox" class="poke-group" name="starters" id="starters" value="starters">Starters</label>
     <label><input type="checkbox" class="poke-group" name="pseudo-legendary" id="pseudo-legendary" value="pseudo-legendary">Pseudo-Legendary</label>
     <label><input type="checkbox" class="poke-group" name="sub-legendary" id="sub-legendary" value="sub-legendary">Sub-Legendary</label> 
@@ -50,17 +53,17 @@ templ SearchBar() {
 </div>
 
 
-<table>
+<table id="table">
 <thead>
     <tr>
         <th>ID</th>
         <th>Name</th>
         <th>Image</th>
-        <th>Main Type</th>
-        <th>Secondary Type</th>
-        <th>First Ability</th>
-        <th>Second Ability</th>
-        <th>Hidden Ability</th>
+        <th>Type</th>
+        // <th>Secondary Type</th>
+        <th>Abilities</th>
+        // <th>Second Ability</th>
+        // <th>Hidden Ability</th>
         <th>HP</th>
         <th>Atk</th>
         <th>Def</th>
@@ -208,8 +211,49 @@ function appendPokemon(pokemons) {
      tbody.innerHTML = '';
     for (const pokemon of pokemons) {
         const row = document.createElement("tr");
+        const types = document.createElement("ul");
+        const abilities = document.createElement("ul");
         for (const key in pokemon) {
-            if (pokemon.hasOwnProperty(key)) {
+            
+            if (key == "main_t") {
+                const main_t = document.createElement("li");
+                main_t.textContent = capitalizes(String(pokemon[key]));
+                types.appendChild(main_t);
+            }
+            else if (key == "sub_t") {
+                const attribute = document.createElement("td");
+                const sub_t = document.createElement("li");
+                if (pokemon[key] != "Null") {
+                    sub_t.textContent = capitalizes(String(pokemon[key]));
+                }
+                types.appendChild(sub_t);
+                attribute.appendChild(types);
+                row.appendChild(attribute);
+            }
+            else if (key == "first_ability") {
+                const first_ability = document.createElement("li");
+                first_ability.textContent = capitalizes(String(pokemon[key]));
+                abilities.appendChild(first_ability);
+            }
+            else if (key == "second_ability") {
+                const second_ability = document.createElement("li");
+                if (pokemon[key] != "Null") {
+                    second_ability.textContent = capitalizes(String(pokemon[key]));
+                }
+                abilities.appendChild(second_ability);
+            }
+             else if (key == "hidden_ability") {
+                const attribute = document.createElement("td");
+                const hidden_ability = document.createElement("li");
+                if (pokemon[key] != "Null") {
+                    hidden_ability.textContent = capitalizes(String(pokemon[key]));
+                    hidden_ability.style.fontWeight = "bold";
+                }
+                abilities.appendChild(hidden_ability);
+                attribute.appendChild(abilities);
+                row.appendChild(attribute);
+            }
+            else {
                 const attribute = document.createElement("td");
                 switch (key) {
                     case "img":
@@ -229,7 +273,7 @@ function appendPokemon(pokemons) {
                         attribute.appendChild(lyst);
                         break;
                     default:
-                        attribute.textContent = String(pokemon[key]);
+                        attribute.textContent = capitalizes(String(pokemon[key]));
                         break;
                 }
                 row.appendChild(attribute);
@@ -301,6 +345,14 @@ function validInput(userInput) {
     //    alert("Invalid Input:\s" + userInput);
     }
 }
+
+function capitalizes(str) {
+    return str
+        .split("-")
+        .map(segment => segment.charAt(0).toUpperCase() + segment.slice(1).toLowerCase())
+        .join("-");
+}
+
 
 </script>
 }
