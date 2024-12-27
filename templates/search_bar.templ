@@ -217,16 +217,20 @@ function appendPokemon(pokemons) {
             
             if (key == "main_t") {
                 const main_t = document.createElement("li");
+                main_t.className = "type";
                 main_t.textContent = capitalizes(String(pokemon[key]));
+                addTypeColor(main_t, main_t.textContent);
                 types.appendChild(main_t);
             }
             else if (key == "sub_t") {
                 const attribute = document.createElement("td");
-                const sub_t = document.createElement("li");
                 if (pokemon[key] != "Null") {
+                    const sub_t = document.createElement("li");
+                    sub_t.className = "type";
                     sub_t.textContent = capitalizes(String(pokemon[key]));
+                    addTypeColor(sub_t, sub_t.textContent);
+                    types.appendChild(sub_t);
                 }
-                types.appendChild(sub_t);
                 attribute.appendChild(types);
                 row.appendChild(attribute);
             }
@@ -281,6 +285,32 @@ function appendPokemon(pokemons) {
         }
         tbody.appendChild(row);
     }
+}
+
+function addTypeColor(li, liType) {
+    typesBgColor = [
+        ["Normal", "#AAAA99"],
+        ["Fire", "#FF4422"],
+        ["Water", "#3399FF"],
+        ["Electric", "#FFCC33"],
+        ["Grass", "#77CC55"],
+        ["Ice", "#66CCFF"],
+        ["Fighting", "#BB5544"],
+        ["Poison", "#AA5599"],
+        ["Ground", "#DDBB55"],
+        ["Flying", "#8899FF"],
+        ["Psychic", "#FF5599"],
+        ["Bug", "#AABB22"],
+        ["Rock", "#BBAA66"],
+        ["Ghost", "#6666BB"],
+        ["Dragon", "#7766EE"],
+        ["Dark", "#775544"],
+        ["Steel", "#AAAABB"],
+        ["Fairy", "#EE99EE"]
+    ];
+    typesBgColor.map( ([type, color]) => {
+        if (liType == type) li.style.backgroundColor = color;
+    });
 }
 
 function switchTagValues(lyst, tags, key) {

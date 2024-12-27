@@ -18,5 +18,22 @@ ul {
 }
 
 li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* text-align: center; */
   list-style: none;
+  /* text-shadow: rgba(0, 0, 0, 0.7) 1px 1px 2px; */
+}
+
+.type {
+  height: 26px;
+  width: 66px;
+  background-position: 0% 0%;
+  font-size: 12px;
+  border: 1px solid white;
+  border-radius: 4px;
+  text-transform: uppercase;
+  text-shadow: rgba(0, 0, 0, 0.7) 1px 1px 2px;
+  color: white;
 }
