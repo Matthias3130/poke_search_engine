@@ -2,14 +2,21 @@ package templates
 
 
 templ SearchBar() {
-<input type="search" id="search" pattern="[A-Za-z\s\-]*" placeholder="Search..." value="" onkeyup="findPokemon(this.value)">
+<div id="search-bar">
+<input type="search" id="search" pattern="[A-Za-z\s\-]*" placeholder="Search..." value="" onkeyup="">
 
 <button type="button" onclick="toggleOrder()">
 <i class="material-icons" id="icon-sort">swap_vert</i>
 </button>
 
+<button type="button" onclick="toggleFilter()">
+<i class="material-icons" id="icon-sort">filter_list</i>
+</button>
+</div>
+
+<div id="filter">
 <div id="filter-type">
-    <h3>Type</h3>
+    <h3>Pokemon Type</h3>
     <label><input type="checkbox" class="poke-type checkbox" name="normal" value="normal">Normal</label>
     <label><input type="checkbox" class="poke-type checkbox" name="fire" value="fire">Fire</label>
     <label><input type="checkbox" class="poke-type checkbox" name="water" value="water">Water</label>
@@ -51,7 +58,7 @@ templ SearchBar() {
     <label><input type="checkbox" class="poke-group" name="legendary" id="legendary" value="legendary">Legendary</label> 
     <label><input type="checkbox" class="poke-group" name="mythical" id="mythical" value="mythical">Mythical</label>
 </div>
-
+</div>
 
 <table id="table">
 <thead>
@@ -84,6 +91,13 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
  let isReverse = false;
+ let isFilterVisible = false;
+
+const search = document.getElementById("search");
+search.addEventListener('input', function () {
+  console.log('Input value:', search.value); // Log input value
+  findPokemon(search.value);
+});
 
 const checkboxes = document.querySelectorAll('.checkbox');
 checkboxes.forEach(checkbox => {
@@ -183,6 +197,10 @@ function toggleOrder() {
     findPokemon(userInput);
 }
 
+function toggleFilter() {
+    const filter = document.getElementById('filter').classList.toggle('show');
+}
+
 function filteredByType() {
     const types = [];
     checkboxes.forEach(checkbox => {
@@ -213,6 +231,7 @@ function appendPokemon(pokemons) {
         const row = document.createElement("tr");
         const types = document.createElement("ul");
         const abilities = document.createElement("ul");
+        abilities.className = "abilities";
         for (const key in pokemon) {
             
             if (key == "main_t") {
@@ -236,11 +255,13 @@ function appendPokemon(pokemons) {
             }
             else if (key == "first_ability") {
                 const first_ability = document.createElement("li");
+                // first_ability.className = "abilities";
                 first_ability.textContent = capitalizes(String(pokemon[key]));
                 abilities.appendChild(first_ability);
             }
             else if (key == "second_ability") {
                 const second_ability = document.createElement("li");
+                // second_ability.className = "abilities";
                 if (pokemon[key] != "Null") {
                     second_ability.textContent = capitalizes(String(pokemon[key]));
                 }
@@ -249,6 +270,7 @@ function appendPokemon(pokemons) {
              else if (key == "hidden_ability") {
                 const attribute = document.createElement("td");
                 const hidden_ability = document.createElement("li");
+                // hidden_ability.className = "abilities";
                 if (pokemon[key] != "Null") {
                     hidden_ability.textContent = capitalizes(String(pokemon[key]));
                     hidden_ability.style.fontWeight = "bold";
@@ -315,6 +337,7 @@ function addTypeColor(li, liType) {
 
 function switchTagValues(lyst, tags, key) {
     const datapoint = document.createElement("li");
+    datapoint.className = "tag";
     const gen = {
         1: "1-Kanto",
         2: "2-Johto",

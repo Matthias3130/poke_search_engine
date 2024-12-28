@@ -1,39 +1,117 @@
 body {
-  margin: 0;
+  margin: 1rem;
   padding: 0;
   font-family: Arial, Helvetica, sans-serif;
+  /* font-size: 12px; */
+  width: auto;
+}
+
+#search-bar {
+  /* border: 1px solid black; */
+  /* background-color: khaki; */
+  margin-bottom: 1rem;
+  display: flex;
+  height: 1.5rem;
+}
+
+#search {
+  margin-right: 1rem;
+}
+
+#search::-webkit-search-cancel-button {
+  -webkit-appearance: none; /* Remove default styling */
+  background: url('../cancel.png') no-repeat center center; /* Custom icon */
+  background-size: 20px 20px; /* Adjust size of the icon */
+  width: 20px; /* Set width of the clear button */
+  height: 20px; /* Set height of the clear button */
+  cursor: pointer; /* Change cursor to pointer */
+}
+
+button {
+  margin-right: 1rem;
+  display: inline-flex; /* Ensure the button sizes based on its contents */
+  justify-content: center; /* Center the icon horizontally */
+  align-items: center; /* Center the icon vertically */
+  font-size: 20px; /* Set the desired size for the icon */
+}
+
+.material-icons {
+  margin: 0;
+  padding: 0;
+  width: auto;
+  height: auto;
+}
+
+#filter {
+  /* padding: auto; */
+  border: 1px solid black;
+  background-color: rgb(248, 208, 215);
+  margin-bottom: 1rem;
+  padding: 1rem;
+  display: none;
+  overflow: hidden;
+}
+
+#filter.show {
+  opacity: 1; /* Make visible */
+  display: block; /* Ensure it’s visible */
 }
 
 #table {
-  table-layout: auto;
-  width: auto;
+  width: 100%;
+  box-sizing: border-box; /* Ensure padding and borders are included in width calculation */
   text-align: center;
-  border-spacing: 1rem;
+  border-collapse: collapse; /* Remove border-spacing between cells */
+  margin: 0 auto; /* Center the table horizontally */
+  /* border: 1px solid black; */
+  background-color: azure;
 }
 
+#table td, #table th {
+  padding: .2rem; /* Set padding for table cells */
+  border: 1px solid black;
+}
 
 ul {
   margin: 0;
   padding: 0;
+  /* border: 1px solid black; */
+  display: flex; /* Enable flexbox on the parent */
+  justify-content: center; /* Center the li elements horizontally */
 }
 
 li {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  /* text-align: center; */
+  /* display: inline-block; */
   list-style: none;
-  /* text-shadow: rgba(0, 0, 0, 0.7) 1px 1px 2px; */
 }
 
 .type {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 26px;
   width: 66px;
   background-position: 0% 0%;
-  font-size: 12px;
   border: 1px solid white;
   border-radius: 4px;
   text-transform: uppercase;
   text-shadow: rgba(0, 0, 0, 0.7) 1px 1px 2px;
   color: white;
+  font-size: 12px;
+}
+
+.abilities {
+  display: block;
+}
+
+.tag {
+  background-color: #CEBC77;
+  background-position: 0% 0%;
+  border: 1px solid white;
+  color: white;
+  border-radius: 30px;
+  text-shadow: rgba(0, 0, 0, 0.7) 1px 1px 2px;
+  width: auto;
+  padding: .2rem .5rem;
+  margin-right: .1rem;
 }
