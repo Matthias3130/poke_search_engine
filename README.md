@@ -8,7 +8,7 @@
 - [Contributing](#contributing)
 - [License](#license)
 - [Reflection](#reflection)
-= [TODOs](#TODOs)
+- [TODOs](#TODOs)
 
 ---
 
