@@ -44,7 +44,7 @@ One important thing to note is that the filters are union-based.
    go install github.com/cosmtrek/air@latest
 
 ## Usage
-Once all the dependencies are installed, you can start the program by typing the command below into your terminal. This will build your project and provide a link to view it on localhost.
+* Once all the dependencies are installed, you can start the program by typing the command below into your terminal. This will build your project and provide a link to view it on localhost.
     ```bash
     air
 
