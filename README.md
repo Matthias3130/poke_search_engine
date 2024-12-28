@@ -1,5 +1,11 @@
 # Pokemon Search Engine
 
+<video width="1280" height="720" controls>
+  <source src="assets/Pokemon Search Engine Demo.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+
 ## Table of Contents
 - [About](#about)
 - [Features](#features)
