@@ -39,8 +39,6 @@ func GetAllPokemon(conn *sql.DB) ([]Pokemon, error) {
 	SELECT *
 	FROM basic_info;`
 
-	//  id, name, img, main_t, sub_t, first_ability, second_ability, hidden_ability, hp, atk, def, sp_atk, sp_def, spd
-
 	rows, err := conn.Query(query)
 	if err != nil {
 		return nil, err
@@ -107,8 +105,6 @@ func FindPokemon(conn *sql.DB, txtInput string, isReverse bool, types []string, 
 	FROM basic_info 
 	WHERE name LIKE ?
 	`
-
-	// id, name, img, main_t, sub_t, first_ability, second_ability, hidden_ability, hp, atk, def, sp_atk, sp_def, spd
 
 	args = append(args, txtInput+"%")
 

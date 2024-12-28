@@ -15,8 +15,6 @@ import (
 	etag "github.com/pablor21/echo-etag/v4"
 )
 
-// var conn *sql.DB
-
 func main() {
 	e := echo.New()
 
@@ -50,20 +48,9 @@ func main() {
 		return ctx.JSON(http.StatusOK, pokemons)
 	})
 
-	// e.GET("/filter_by_type", func(ctx echo.Context) error {
-	// 	typesParam := ctx.QueryParam("types")
-	// 	types := strings.Split(typesParam, ",")
-
-	// 	pokemons, err := db.FindPokemon(conn)
-	// 	if err != nil {
-	// 		log.Fatal(err)
-	// 	}
-	// 	return ctx.JSON(http.StatusOK, pokemons)
-	// })
-
 	e.POST("/find_pokemon", func(ctx echo.Context) error {
 		var request struct {
-			Find  string   `json:"find"` // This matches the key sent in the request body
+			Find  string   `json:"find"`
 			Order bool     `json:"order"`
 			Types []string `json:"types"`
 			Gens  []int    `json:"gens"`
@@ -75,7 +62,7 @@ func main() {
 		}
 
 		log.Println("Received Types:", request.Types)
-		log.Println("Received request:", request) // Logs the received request
+		log.Println("Received request:", request)
 
 		pokemons, err := db.FindPokemon(conn, request.Find, request.Order, request.Types, request.Gens, request.Group)
 		if err != nil {
